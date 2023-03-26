@@ -1,24 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
+import { defaultTheme } from "./themes/defaultTheme";
+import { useEffect, useMemo } from "react";
+import { getMovieList } from "./redux/actions/movieAction/getMovieList";
+import { useDispatch } from "react-redux";
+import { getTheaterList } from "./redux/actions/theaterAction/getTheaterList";
+import LoadingScreen from "./Components/UtilComponents/LoadingScreen/LoadingScreen";
+import { routeInfoArray } from "./routes/routeInfoArray";
+import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
 
 function App() {
+  const theme = defaultTheme;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMovieList());
+    dispatch(getTheaterList());
+  }, [dispatch]);
+
+  const routeArray = useMemo(
+    () =>
+      routeInfoArray.map((item) => {
+        return (
+          <Route
+            key={item.path}
+            path={item.path}
+            element={<item.Layout Component={<item.Component />} />}
+          />
+        );
+      }),
+    []
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
+          <Routes>
+            {routeArray}
+
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
+
+      <LoadingScreen />
+    </>
   );
 }
 

@@ -1,0 +1,1 @@
+export const GET_THEATER_DATA = "GET_THEATER_DATA";

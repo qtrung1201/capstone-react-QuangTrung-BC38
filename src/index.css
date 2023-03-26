@@ -5,9 +5,34 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: overlay
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ant-tabs-left>.ant-tabs-content-holder>.ant-tabs-content>.ant-tabs-tabpane.module, .ant-tabs-left>div>.ant-tabs-content-holder>.ant-tabs-content>.ant-tabs-tabpane.module {
+  padding-left: 0px;
+}
+ 
+.module .ant-tabs-tab-btn, .module .ant-tabs-tab-remove {
+  outline: none;
+  transition: all .3s;
+  min-width: max-content;
+  height: 100%;
+}
+
+.module .ant-pagination-next .ant-pagination-item-link, .module .ant-pagination-prev .ant-pagination-item-link{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.module.ant-switch{
+  background-image: linear-gradient(90deg,rgba(0,0,0,.25),rgba(0,0,0,.25)),linear-gradient(90deg,#fff,#fff);
+}
+
+.ant-switch.ant-switch-checked {
+  background: #1890ff;
 }
